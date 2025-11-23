@@ -1,0 +1,276 @@
+{
+  "info": {
+    "name": "WorkTime Assist API",
+    "description": "coleção de requisições para a API WorkTime Assist",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Autenticação",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"teste@email.com\",\n  \"password\": \"senha123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "autentica usuário com email e senha. retorna token JWT. use o email no campo username."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Usuários",
+      "item": [
+        {
+          "name": "Criar Usuário",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"João Silva\",\n  \"email\": \"joao@email.com\",\n  \"senha\": \"senha123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios"]
+            },
+            "description": "cria um novo usuário. email deve ser único. senha será criptografada automaticamente."
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar Usuário por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": ""
+                }
+              ]
+            },
+            "description": "busca um usuário específico pelo ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Meu Perfil",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/usuarios/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "usuarios", "me"]
+            },
+            "description": "retorna os dados do usuário logado (baseado no token JWT)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Pausas",
+      "item": [
+        {
+          "name": "Criar Pausa",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inicio\": \"2024-01-15T10:00:00\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/pausas",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "pausas"]
+            },
+            "description": "cria uma nova pausa vinculada ao usuário logado. se inicio não for informado, usa data/hora atual. pode enviar {} vazio."
+          },
+          "response": []
+        },
+        {
+          "name": "Listar Pausas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/pausas?page=0&size=10&sort=inicio,DESC",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "pausas"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0",
+                  "description": "número da página (começa em 0)"
+                },
+                {
+                  "key": "size",
+                  "value": "10",
+                  "description": "tamanho da página"
+                },
+                {
+                  "key": "sort",
+                  "value": "inicio,DESC",
+                  "description": "campo de ordenação (campo,direção)"
+                }
+              ]
+            },
+            "description": "lista as pausas do usuário logado com paginação. cada usuário vê apenas suas próprias pausas."
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar Pausa por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/pausas/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "pausas", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "ID da pausa (UUID)"
+                }
+              ]
+            },
+            "description": "busca uma pausa específica. só retorna se a pausa pertencer ao usuário logado."
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar Pausa",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inicio\": \"2024-01-15T10:00:00\",\n  \"fim\": \"2024-01-15T10:15:00\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/pausas/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "pausas", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "ID da pausa (UUID)"
+                }
+              ]
+            },
+            "description": "atualiza uma pausa existente. ao informar fim, a duração é calculada automaticamente. só funciona para pausas do usuário logado."
+          },
+          "response": []
+        },
+        {
+          "name": "Deletar Pausa",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/pausas/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "pausas", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "",
+                  "description": "ID da pausa (UUID)"
+                }
+              ]
+            },
+            "description": "remove uma pausa. só funciona para pausas do usuário logado."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string",
+      "description": "token JWT obtido no login. será preenchido automaticamente após login."
+    }
+  ]
+}
