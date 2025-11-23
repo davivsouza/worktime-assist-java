@@ -258,6 +258,140 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "Procedures e Funções",
+      "item": [
+        {
+          "name": "Inserir Usuário via Procedure",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Teste Procedure\",\n  \"email\": \"teste.procedure@email.com\",\n  \"senha\": \"senha123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/procedures/inserir-usuario",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "procedures", "inserir-usuario"]
+            },
+            "description": "chama a procedure inserir_usuario do banco de dados para inserir um novo usuário"
+          },
+          "response": []
+        },
+        {
+          "name": "Inserir Pausa via Procedure",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inicio\": \"2024-01-15T10:00:00\",\n  \"fim\": \"2024-01-15T10:15:00\",\n  \"usuarioId\": \"00000000-0000-0000-0000-000000000000\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/procedures/inserir-pausa",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "procedures", "inserir-pausa"]
+            },
+            "description": "chama a procedure inserir_pausa do banco de dados para inserir uma nova pausa. substitua usuarioId pelo ID de um usuário válido."
+          },
+          "response": []
+        },
+        {
+          "name": "Calcular Duração via Função",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inicio\": \"2024-01-15T10:00:00\",\n  \"fim\": \"2024-01-15T10:15:00\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/procedures/calcular-duracao",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "procedures", "calcular-duracao"]
+            },
+            "description": "chama a função calcular_duracao_pausa do banco de dados para calcular a duração entre duas datas"
+          },
+          "response": []
+        },
+        {
+          "name": "Validar Email via Função",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/procedures/validar-email?email=novo@email.com",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "procedures", "validar-email"],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "novo@email.com",
+                  "description": "email a ser validado"
+                }
+              ]
+            },
+            "description": "chama a função validar_email_usuario do banco de dados para verificar se um email é válido e está disponível"
+          },
+          "response": []
+        },
+        {
+          "name": "Contar Pausas via Função",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/procedures/contar-pausas/:usuarioId",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "procedures", "contar-pausas", ":usuarioId"],
+              "variable": [
+                {
+                  "key": "usuarioId",
+                  "value": "",
+                  "description": "ID do usuário (UUID)"
+                }
+              ],
+              "query": [
+                {
+                  "key": "dataInicio",
+                  "value": "",
+                  "description": "data inicial (opcional, formato: 2024-01-15T10:00:00)",
+                  "disabled": true
+                },
+                {
+                  "key": "dataFim",
+                  "value": "",
+                  "description": "data final (opcional, formato: 2024-01-15T10:00:00)",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "chama a função contar_pausas_usuario do banco de dados para contar o total de pausas de um usuário. pode incluir filtros opcionais por período."
+          },
+          "response": []
+        }
+      ]
     }
   ],
   "variable": [

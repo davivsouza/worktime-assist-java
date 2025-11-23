@@ -36,3 +36,10 @@ build/
 application-local.properties
 *.log
 
+### Documentation ###
+*.md
+
+### Database Scripts ###
+**/db/scripts/**/*.sql
+src/main/resources/db/scripts/**/*.sql
+

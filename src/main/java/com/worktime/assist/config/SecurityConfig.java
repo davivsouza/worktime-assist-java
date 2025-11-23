@@ -28,6 +28,7 @@ public class SecurityConfig {
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/usuarios").permitAll() // permitir cadastro
+                        .requestMatchers("/api/procedures/**").permitAll() // permitir todos os endpoints de procedures para demonstração
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

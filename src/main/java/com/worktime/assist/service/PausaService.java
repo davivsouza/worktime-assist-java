@@ -25,7 +25,6 @@ public class PausaService {
 
     private final PausaRepository pausaRepository;
     private final PausaMapper pausaMapper;
-    private final OracleProcedureService oracleProcedureService;
     private final UsuarioService usuarioService;
 
     @Transactional
@@ -40,9 +39,6 @@ public class PausaService {
         if (pausa.getInicio() == null) {
             pausa.setInicio(LocalDateTime.now());
         }
-        
-        // chama procedure oracle para iniciar pausa
-        oracleProcedureService.iniciarPausa(pausa.getInicio());
         
         pausa = pausaRepository.save(pausa);
         return pausaMapper.toResponse(pausa);
@@ -95,9 +91,6 @@ public class PausaService {
         if (request.getFim() != null) {
             pausa.setFim(request.getFim());
             pausa.calcularDuracao();
-            
-            // chama procedure oracle para encerrar pausa
-            oracleProcedureService.encerrarPausa(pausa.getFim(), pausa.getDuracao());
         }
 
         Pausa savedPausa = pausaRepository.save(pausa);

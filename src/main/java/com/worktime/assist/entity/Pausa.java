@@ -20,7 +20,7 @@ public class Pausa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", columnDefinition = "RAW(16)")
+    @Column(name = "id")
     private UUID id;
 
     @NotNull(message = "inicio é obrigatório")

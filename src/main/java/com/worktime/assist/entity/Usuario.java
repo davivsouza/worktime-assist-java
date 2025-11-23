@@ -22,7 +22,7 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", columnDefinition = "RAW(16)")
+    @Column(name = "id")
     private UUID id;
 
     @NotBlank(message = "nome é obrigatório")
